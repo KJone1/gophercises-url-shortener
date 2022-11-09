@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"net/http"
 
+	parser "github.com/KJone1/gophercises-url-shortener/parsers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,14 +13,26 @@ func StatusOK(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
 func Redirect(c *gin.Context) {
-	c.Redirect(http.StatusMovedPermanently, "http://www.google.com/")
+	url := c.Param("route")
+	url = "/" + url
+	f := parser.Yaml("./routeFile.yaml")
+
+	for _, m := range f {
+		if url == m.From {
+			fmt.Printf("redirected to: %s from url: %s\n", m.To, url)
+			c.Redirect(http.StatusMovedPermanently, m.To)
+			return
+		}
+	}
+	c.String(http.StatusBadRequest, "400 BadRequest")
+
 }
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 
-	router.GET("/", Redirect)
+	router.GET("/:route", Redirect)
 
 	router.GET("/ping", StatusOK)
 
