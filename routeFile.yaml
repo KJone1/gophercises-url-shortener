@@ -1,0 +1,4 @@
+- path: /ex
+  redirect: https://gin-gonic.com/docs/examples/
+- path: /yaml
+  redirect: https://github.com/go-yaml/yaml
