@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	parser "github.com/KJone1/gophercises-url-shortener/parsers"
+	parser "github.com/KJone1/gophercises-url-shortener/src/parsers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,7 +40,7 @@ func main() {
 	route_file := flag.String("f", "routeFile.yaml", "Route file to use.")
 	flag.Parse()
 
-	if *debug_mode == false {
+	if !*debug_mode {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
@@ -49,9 +49,9 @@ func main() {
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 
-	router.LoadHTMLGlob("./assets/404/404.html")
-	router.Static("/assets/404", "./assets/404/")
-	router.StaticFile("/favicon.ico", "./assets/favicon.ico")
+	router.LoadHTMLGlob("./src/assets/404/404.html")
+	router.Static("/assets/404", "./src/assets/404/")
+	router.StaticFile("/favicon.ico", "./src/assets/favicon.ico")
 
 	v1 := router.Group("api/v1/")
 	{
@@ -59,5 +59,5 @@ func main() {
 		v1.GET("/ping", StatusOK)
 	}
 
-	router.Run(":3000")
+	router.Run(":4001")
 }
