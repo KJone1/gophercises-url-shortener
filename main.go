@@ -26,9 +26,12 @@ func Redirect(file parser.Destructured) gin.HandlerFunc {
 			}
 		}
 
-		c.JSON(http.StatusBadRequest, "400 BadRequest")
+		c.HTML(http.StatusNotFound, "404.html", gin.H{})
+
 	}
+
 	return gin.HandlerFunc(fn)
+
 }
 
 func main() {
@@ -45,6 +48,10 @@ func main() {
 
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
+
+	router.LoadHTMLGlob("./assets/404/404.html")
+	router.Static("/assets/404", "./assets/404/")
+	router.StaticFile("/favicon.ico", "./assets/favicon.ico")
 
 	v1 := router.Group("api/v1/")
 	{
