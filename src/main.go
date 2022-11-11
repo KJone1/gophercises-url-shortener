@@ -20,7 +20,9 @@ func Redirect(file parser.Destructured) gin.HandlerFunc {
 
 		for _, m := range file {
 			if url == m.From {
-				fmt.Printf("redirected to: %s from url: %s\n", m.To, url)
+				text := "Redirected to: " + m.To + "from url: " + url
+				bold_text := fmt.Sprintf("\x1b[%dm%s\x1b[0m", 1, text)
+				fmt.Println(bold_text)
 				c.Redirect(http.StatusMovedPermanently, m.To)
 				return
 			}
