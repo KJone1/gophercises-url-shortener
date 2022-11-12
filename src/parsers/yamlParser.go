@@ -1,7 +1,6 @@
-package YamlParser
+package yamlparser
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -18,11 +17,15 @@ func Yaml(file string) Destructured {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Reading: %s\n", file)
+
 	t := Destructured{}
+
+	log.Printf("Reading: %s\n", file)
+
 	err = yaml.Unmarshal(rf, &t)
 	if err != nil {
 		log.Fatalf("Error parsing yaml: \"%s\", %v", file, err)
 	}
+
 	return t
 }

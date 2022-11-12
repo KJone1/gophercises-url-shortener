@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 
 	parser "github.com/KJone1/gophercises-url-shortener/src/parsers"
@@ -14,30 +15,27 @@ func StatusOK(c *gin.Context) {
 }
 
 func Redirect(file parser.Destructured) gin.HandlerFunc {
-	fn := func(c *gin.Context) {
-
+	context := func(c *gin.Context) {
 		url := "/" + c.Param("route")
 
 		for _, m := range file {
 			if url == m.From {
 				text := "Redirected to: " + m.To + "from url: " + url
 				bold_text := fmt.Sprintf("\x1b[%dm%s\x1b[0m", 1, text)
-				fmt.Println(bold_text)
+				log.Println(bold_text)
 				c.Redirect(http.StatusMovedPermanently, m.To)
+
 				return
 			}
 		}
 
 		c.HTML(http.StatusNotFound, "404.html", gin.H{})
-
 	}
 
-	return gin.HandlerFunc(fn)
-
+	return gin.HandlerFunc(context)
 }
 
 func main() {
-
 	debug_mode := flag.Bool("v", false, "Run in debug mode, verbose logging.")
 	route_file := flag.String("f", "routeFile.yaml", "Route file to use.")
 	flag.Parse()
@@ -49,7 +47,11 @@ func main() {
 	py := parser.Yaml(*route_file)
 
 	router := gin.Default()
-	router.SetTrustedProxies(nil)
+
+	err := router.SetTrustedProxies(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	router.LoadHTMLGlob("./src/assets/404/404.html")
 	router.Static("/assets/404", "./src/assets/404/")
@@ -61,5 +63,8 @@ func main() {
 		v1.GET("/ping", StatusOK)
 	}
 
-	router.Run(":4001")
+	err = router.Run(":4001")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
