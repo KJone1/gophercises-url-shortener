@@ -11,5 +11,6 @@
 *.out
 
 # Go workspace file
+.vscode
 go.work
 .env
