@@ -7,9 +7,11 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type Destructured []struct {
-	From string `yaml:"path"`
-	To   string `yaml:"redirect"`
+type Destructured struct {
+	Mapping []struct {
+		From string `yaml:"from"`
+		To   string `yaml:"to"`
+	} `yaml:"Mapping"`
 }
 
 func Yaml(file string) Destructured {

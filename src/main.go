@@ -18,7 +18,7 @@ func Redirect(file parser.Destructured) gin.HandlerFunc {
 	context := func(c *gin.Context) {
 		url := "/" + c.Param("route")
 
-		for _, m := range file {
+		for _, m := range file.Mapping {
 			if url == m.From {
 				text := "Redirected to: " + m.To + "from url: " + url
 				bold_text := fmt.Sprintf("\x1b[%dm%s\x1b[0m", 1, text)
