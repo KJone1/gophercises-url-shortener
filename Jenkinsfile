@@ -14,7 +14,9 @@ pipeline {
                   )
                 println goExists  
                 if (goExists != 0) {
-                  sh 'rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz'
+                  sh 'rm -rf /usr/local/go'
+                  sh 'curl https://go.dev/dl/go1.19.3.linux-amd64.tar.gz'
+                  sh 'tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz'
                   sh 'export PATH=$PATH:/usr/local/go/bin'
                   sh 'go version'
                 }
