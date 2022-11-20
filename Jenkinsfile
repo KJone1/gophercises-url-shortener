@@ -7,22 +7,22 @@ pipeline {
       stage("prep") {
             steps {
               script {
-                echo 'PREP EXECUTION STARTED'
+                println 'PREP EXECUTION STARTED'
                 goExists = sh(
-                  script: 'go -v &> /dev/null',
+                  script: 'go -v',
                   returnStatus: true
                   )
-                echo goExists  
+                println goExists  
                 if (goExists != 0) {
                   sh 'rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz'
                   sh 'export PATH=$PATH:/usr/local/go/bin'
                   sh 'go version'
                 }
                 pmExists = sh(
-                  script: 'podman -v &> /dev/null',
+                  script: 'podman -v',
                   returnStatus: true
                   )
-                echo goExists 
+                println pmExists 
                 if (pmExists != 0) {
                   sh 'sudo dnf -y install podman'
                   sh 'podman -v'
@@ -32,14 +32,14 @@ pipeline {
         }
         stage("unit-test") {
             steps {
-                echo 'UNIT TEST EXECUTION STARTED'
+                println 'UNIT TEST EXECUTION STARTED'
                 sh 'go test ./tests/...'
             }
         }
         stage("build") {
             steps {
               script {
-                echo 'BUILD EXECUTION STARTED'
+                println 'BUILD EXECUTION STARTED'
                 sh 'go version'
                 sh "docker build -f ./build/Dockerfile -t kj/url-short:${BUILD_ID}" .
                 sh 'docker images'
