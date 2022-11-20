@@ -12,7 +12,7 @@ pipeline {
                   script: 'go -v &> /dev/null',
                   returnStatus: true
                   )
-                if goExists != 0 {
+                if (goExists != 0) {
                   sh 'rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz'
                   sh 'export PATH=$PATH:/usr/local/go/bin'
                   sh 'go version'
@@ -21,7 +21,7 @@ pipeline {
                   script: 'podman -v &> /dev/null',
                   returnStatus: true
                   )
-                if pmExists != 0 {
+                if (pmExists != 0) {
                   sh 'sudo dnf -y install podman'
                   sh 'podman -v'
                 }
