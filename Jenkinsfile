@@ -8,19 +8,21 @@ pipeline {
             steps {
               script {
                 echo 'PREP EXECUTION STARTED'
-                goExists = sh (
+                goExists = sh(
                   script: 'go -v &> /dev/null',
                   returnStatus: true
                   )
+                echo goExists  
                 if (goExists != 0) {
                   sh 'rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz'
                   sh 'export PATH=$PATH:/usr/local/go/bin'
                   sh 'go version'
                 }
-                pmExists = sh (
+                pmExists = sh(
                   script: 'podman -v &> /dev/null',
                   returnStatus: true
                   )
+                echo goExists 
                 if (pmExists != 0) {
                   sh 'sudo dnf -y install podman'
                   sh 'podman -v'
