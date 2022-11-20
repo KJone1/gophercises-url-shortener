@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'golang:1.19.3-alpine'
-        }
-    }
+    agent any
     environment {
         GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
     }
@@ -18,7 +14,7 @@ pipeline {
             steps {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
-                sh "docker build -f ./build/Dockerfile -t kj/url-short:${BUILD_ID}" .
+                sh 'docker build -f ./build/Dockerfile -t kj/url-short:${BUILD_ID}' .
                 sh 'docker images'
             }
         }
