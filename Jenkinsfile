@@ -12,10 +12,12 @@ pipeline {
         }
         stage("build") {
             steps {
+              script {
                 echo 'BUILD EXECUTION STARTED'
                 sh 'go version'
-                sh 'docker build -f ./build/Dockerfile -t kj/url-short:${BUILD_ID}' .
+                sh "docker build -f ./build/Dockerfile -t kj/url-short:${BUILD_ID}" .
                 sh 'docker images'
+              }
             }
         }
     }
