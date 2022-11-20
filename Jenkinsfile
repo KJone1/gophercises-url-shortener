@@ -9,14 +9,13 @@ pipeline {
               script {
                 println 'PREP EXECUTION STARTED'
                 goExists = sh(
-                  script: 'go -v',
+                  script: 'go version',
                   returnStatus: true
                   )
                 println goExists  
                 if (goExists != 0) {
-                  sh 'rm -rf /usr/local/go'
                   sh 'curl -L -o /tmp/go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz'
-                  sh 'tar -C /var/jenkins_home/go -xzf /tmp/go1.19.3.linux-amd64.tar.gz'
+                  sh 'tar -C /var/jenkins_home/ -xzf /tmp/go1.19.3.linux-amd64.tar.gz'
                   sh 'rm -f /tmp/go1.19.3.linux-amd64.tar.gz'
                   sh 'export PATH=$PATH:/var/jenkins_home/go/bin'
                   sh 'go version'
