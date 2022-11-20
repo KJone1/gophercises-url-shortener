@@ -18,7 +18,6 @@ pipeline {
                   sh 'tar -C /var/jenkins_home/ -xzf /tmp/go1.19.3.linux-amd64.tar.gz'
                   sh 'rm -f /tmp/go1.19.3.linux-amd64.tar.gz'
                   sh 'export PATH=$PATH:/var/jenkins_home/go/bin'
-                  sh 'go version'
                 }
                 pmExists = sh(
                   script: 'podman -v',
