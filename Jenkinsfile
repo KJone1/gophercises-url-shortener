@@ -4,6 +4,30 @@ pipeline {
         GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
     }
     stages {
+      stage("prep") {
+            steps {
+              script {
+                echo 'PREP EXECUTION STARTED'
+                goExists = sh (
+                  script: 'go -v &> /dev/null',
+                  returnStatus: true
+                  )
+                if goExists != 0 {
+                  sh 'rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz'
+                  sh 'export PATH=$PATH:/usr/local/go/bin'
+                  sh 'go version'
+                }
+                pmExists = sh (
+                  script: 'podman -v &> /dev/null',
+                  returnStatus: true
+                  )
+                if pmExists != 0 {
+                  sh 'sudo dnf -y install podman'
+                  sh 'podman -v'
+                }
+              }
+            }
+        }
         stage("unit-test") {
             steps {
                 echo 'UNIT TEST EXECUTION STARTED'
