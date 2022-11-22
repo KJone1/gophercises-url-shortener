@@ -43,9 +43,8 @@ pipeline {
             steps {
               script {
                 println 'BUILD EXECUTION STARTED'
-                sh 'go version'
-                sh "docker build -f ./build/Dockerfile -t kj/url-short:${BUILD_ID} ."
-                sh 'docker images'
+                sh "buidah bud -f ./build/Dockerfile -t kj/url-short:${BUILD_ID} ."
+                sh 'buildah images'
               }
             }
         }
