@@ -15,9 +15,9 @@ pipeline {
                 println goExists  
                 if (goExists != 0) {
                   sh 'curl -L -o /tmp/go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz'
-                  sh 'sudo tar -C /usr/local -xzf /tmp/go1.19.3.linux-amd64.tar.gz'
-                  sh 'sudo rm -f /tmp/go1.19.3.linux-amd64.tar.gz'
-                  sh 'export PATH=$PATH:/usr/local/go/bin'
+                  sh 'tar -C /home/jenkins -xzf /tmp/go1.19.3.linux-amd64.tar.gz'
+                  sh 'rm -f /tmp/go1.19.3.linux-amd64.tar.gz'
+                  sh 'export PATH=$PATH:/home/jenkins/go/bin'
                 }
                 blExists = sh(
                   script: 'buildah -v',
