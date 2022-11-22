@@ -13,7 +13,6 @@ pipeline {
                   script: 'go version',
                   returnStatus: true
                   )
-                println goExists  
                 if (goExists != 0) {
                   sh 'curl -L -o /tmp/go1.19.3.linux-amd64.tar.gz https://go.dev/dl/go1.19.3.linux-amd64.tar.gz'
                   sh 'tar -C /home/jenkins -xzf /tmp/go1.19.3.linux-amd64.tar.gz'
@@ -24,7 +23,6 @@ pipeline {
                   script: 'buildah -v',
                   returnStatus: true
                   )
-                println blExists 
                 if (blExists != 0) {
                   sh 'sudo yum -y install buildah'
                   sh 'buildah -v'
