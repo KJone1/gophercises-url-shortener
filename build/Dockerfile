@@ -1,4 +1,4 @@
-FROM dockerhub.io/golang:1.19-alpine3.16
+FROM docker.io/library/golang:1.19-alpine3.16
 
 WORKDIR /app
 
