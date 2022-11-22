@@ -43,7 +43,7 @@ pipeline {
             steps {
               script {
                 println 'BUILD EXECUTION STARTED'
-                sh "buidah bud -f ./build/Dockerfile -t kj/url-short:${BUILD_ID} ."
+                sh "buildah bud -f ./build/Dockerfile -t kj/url-short:${BUILD_ID} ."
                 sh 'buildah images'
               }
             }
