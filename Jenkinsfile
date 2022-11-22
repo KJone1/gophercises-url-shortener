@@ -25,8 +25,9 @@ pipeline {
                   )
                 println blExists 
                 if (blExists != 0) {
-                  sh 'sudo yum -y install buildah'
-                  sh 'buildah -v'
+                  // sh 'sudo yum -y install buildah'
+                  // sh 'buildah -v'
+                  println 'Buildah is missing.'
                 }
               }
             }
