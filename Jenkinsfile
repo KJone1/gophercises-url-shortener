@@ -26,9 +26,8 @@ pipeline {
                   )
                 println blExists 
                 if (blExists != 0) {
-                  // sh 'sudo yum -y install buildah'
-                  // sh 'buildah -v'
-                  println 'Buildah is missing.'
+                  sh 'sudo yum -y install buildah'
+                  sh 'buildah -v'
                 }
               }
             }
@@ -43,8 +42,8 @@ pipeline {
             steps {
               script {
                 println 'BUILD EXECUTION STARTED'
-                sh "buildah bud -f ./build/Dockerfile -t kj/url-short:${BUILD_ID} ."
-                sh 'buildah images'
+                sh "sudo buildah bud -f ./build/Dockerfile -t kj/url-short:${BUILD_ID}"
+                sh 'sudo buildah images'
               }
             }
         }
