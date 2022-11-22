@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
+        PATH="$PATH:/home/jenkins/go/bin"
     }
     stages {
       stage("prep") {
